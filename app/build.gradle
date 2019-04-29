@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.ar.sceneform.plugin'
 
 android {
     compileSdkVersion 28
@@ -43,10 +42,11 @@ dependencies {
     // Provides ArFragment, and other UX resources.
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.8.0'
 
-    // Alternatively, use ArSceneView without the UX dependency.
-    implementation 'com.google.ar.sceneform:core:1.8.0'
-
     // Anko commons
     implementation "org.jetbrains.anko:anko-commons:0.10.8"
 
 }
+sceneform.asset('sampledata/models/fox_face.fbx',
+        'sampledata/models/fox_face_material.mat',
+        'sampledata/models/fox_face.sfa',
+        'src/main/assets/fox_face')
