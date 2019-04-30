@@ -46,7 +46,13 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:0.10.8"
 
 }
-sceneform.asset('sampledata/models/fox_face.fbx',
-        'sampledata/models/fox_face_material.mat',
-        'sampledata/models/fox_face.sfa',
+
+sceneform.asset('sampledata/fox/fox_face.fbx',
+        'sampledata/fox/fox_face_material.mat',
+        'sampledata/fox/fox_face.sfa',
         'src/main/assets/fox_face')
+
+sceneform.asset('sampledata/casual/casual.fbx',
+        'default',
+        'sampledata/casual/casual.sfa',
+        'src/main/assets/casual')

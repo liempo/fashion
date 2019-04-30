@@ -7,21 +7,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE
-import com.google.ar.core.AugmentedFace
-import com.google.ar.core.TrackingState
+import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.math.Quaternion
+import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
-import com.google.ar.sceneform.rendering.Renderable
-import com.google.ar.sceneform.rendering.Texture
-import com.google.ar.sceneform.ux.AugmentedFaceNode
+import com.google.ar.sceneform.ux.ArFragment
+import com.google.ar.sceneform.ux.TransformableNode
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.info
 
 class ARActivity : AppCompatActivity(), AnkoLogger {
-
-    private lateinit var faceRenderable: ModelRenderable
-    private lateinit var faceTexture: Texture
-    private val faceNodeMap = hashMapOf<AugmentedFace, AugmentedFaceNode>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,74 +29,50 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
             }.show()
 
         // Get the instance of arFragment
-        val fragment = supportFragmentManager.
-            findFragmentById(R.id.face_fragment) as AugmentedFaceFragment
+        val ux = supportFragmentManager.
+            findFragmentById(R.id.ux_fragment) as ArFragment
 
         // Render 3D model
+        var shirt: ModelRenderable? = null
         ModelRenderable.builder()
-            .setSource(this, Uri.parse("fox_face.sfb"))
+            .setSource(this, Uri.parse("casual.sfb"))
             .build()
             .thenAccept {
-                faceRenderable = it.apply {
+                shirt = it.apply {
                     isShadowCaster = false
                     isShadowReceiver = false
                 }
             }
 
-        // Load the face mesh texture.
-        Texture.builder()
-            .setSource(this, R.drawable.fox_face_mesh_texture)
-            .build()
-            .thenAccept { faceTexture = it }
+        var transformable: TransformableNode? = null
+        ux.setOnTapArPlaneListener { hit, _, _ ->
+            if (shirt == null) return@setOnTapArPlaneListener
 
-        val sceneView = fragment.arSceneView
-
-        // This is important to make sure that the camera
-        // stream renders first so that the face mesh occlusion works correctly.
-        sceneView.cameraStreamRenderPriority = Renderable.RENDER_PRIORITY_FIRST
-
-        val scene = sceneView.scene
-
-        // Setup scene hahaha
-        scene.addOnUpdateListener {
-
-            // Return if model is initialized
-            if (this::faceRenderable.isInitialized.not()) {
-                info { "faceRenderable is not initialized. Skipping." }
-                return@addOnUpdateListener
+            // Create anchor node from hit point
+            val node = AnchorNode(hit.createAnchor()).apply {
+                setParent(ux.arSceneView.scene)
             }
 
-            if (this::faceTexture.isInitialized.not()) {
-                info { "faceTexture is not initialized. Skipping." }
-                return@addOnUpdateListener
+            // Create transformable (scalable) node from hit point
+            transformable = TransformableNode(ux.transformationSystem).apply {
+                renderable = shirt
+
+                scaleController.minScale = 0.05f
+                scaleController.maxScale = 0.85f
+                localScale = localScale.scaled(0.15f)
+                localRotation = Quaternion.axisAngle(Vector3(0f, 1f, 0f), 180f)
+
+                // The local scale of the TransformableNode
+                // must be set before calling node.setParent
+                setParent(node); select()
             }
+        }
 
-            info { "isSessionNull ${ sceneView.session == null }" }
-            val faces = sceneView.session!!.
-                getAllTrackables(AugmentedFace::class.java)
+        ux.arSceneView.scene.addOnUpdateListener {
+            // TODO get posenet data here and
+            //  move transformable based on posenet data
 
-            for (face in faces) {
-                if (faceNodeMap.containsKey(face))
-                    continue
 
-                faceNodeMap[face] = AugmentedFaceNode(face).apply {
-                    setParent(scene)
-                    faceRegionsRenderable = faceRenderable
-                    faceMeshTexture = faceTexture
-                }
-            }
-
-            val iterator = faceNodeMap.iterator()
-            while (iterator.hasNext()) {
-                val entry = iterator.next()
-                val face = entry.key
-
-                if (face.trackingState == TrackingState.STOPPED) {
-                    val node = entry.value
-                    node.setParent(null)
-                    iterator.remove()
-                }
-            }
         }
     }
 
@@ -115,9 +86,7 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                 (getOpenGLVersion() > MIN_OPENGL_VERSION)
 
     companion object {
-
         private const val MIN_OPENGL_VERSION = 3.0
-
     }
 
 }
