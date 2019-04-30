@@ -20,13 +20,17 @@ android {
         }
     }
 
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+
     // Sceneform libraries use language constructs from Java 8.
     // Add these compile options if targeting minSdkVersion < 26.
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-
 }
 
 dependencies {
@@ -44,16 +48,7 @@ dependencies {
 
     // Anko commons
     implementation "org.jetbrains.anko:anko-commons:0.10.8"
-
-    // Tensorflow lite and OpenCV (PoseEstimation)
-    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
-
 }
-
-sceneform.asset('sampledata/fox/fox_face.fbx',
-        'sampledata/fox/fox_face_material.mat',
-        'sampledata/fox/fox_face.sfa',
-        'src/main/assets/fox_face')
 
 sceneform.asset('sampledata/casual/casual.fbx',
         'default',

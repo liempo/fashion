@@ -18,6 +18,7 @@ import org.jetbrains.anko.alert
 
 class ARActivity : AppCompatActivity(), AnkoLogger {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ar)
@@ -27,10 +28,6 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
             alert("OpenGL version must be above $MIN_OPENGL_VERSION.") {
                 positiveButton("OK") { finish() }
             }.show()
-
-        // Get the instance of arFragment
-        val ux = supportFragmentManager.
-            findFragmentById(R.id.ux_fragment) as ArFragment
 
         // Render 3D model
         var shirt: ModelRenderable? = null
@@ -43,6 +40,10 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                     isShadowReceiver = false
                 }
             }
+
+        // Get the instance of arFragment
+        val ux = supportFragmentManager.
+            findFragmentById(R.id.ux_fragment) as ArFragment
 
         var transformable: TransformableNode? = null
         ux.setOnTapArPlaneListener { hit, _, _ ->
@@ -66,13 +67,6 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                 // must be set before calling node.setParent
                 setParent(node); select()
             }
-        }
-
-        ux.arSceneView.scene.addOnUpdateListener {
-            // TODO get posenet data here and
-            //  move transformable based on posenet data
-
-
         }
     }
 
