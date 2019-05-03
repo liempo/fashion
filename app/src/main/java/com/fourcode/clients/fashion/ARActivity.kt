@@ -7,17 +7,20 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE
+import com.google.ar.core.AugmentedImage
+import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
-import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.info
 
 class ARActivity : AppCompatActivity(), AnkoLogger {
 
+    private val detected = hashMapOf<AugmentedImage, TransformableNode>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,31 +46,48 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
 
         // Get the instance of arFragment
         val ux = supportFragmentManager.
-            findFragmentById(R.id.ux_fragment) as ArFragment
+            findFragmentById(R.id.ux_fragment) as AugmentedImageFragment
 
-        var transformable: TransformableNode? = null
-        ux.setOnTapArPlaneListener { hit, _, _ ->
-            if (shirt == null) return@setOnTapArPlaneListener
+        ux.arSceneView.scene.addOnUpdateListener {
+            val frame = ux.arSceneView.arFrame!!
 
-            // Create anchor node from hit point
-            val node = AnchorNode(hit.createAnchor()).apply {
-                setParent(ux.arSceneView.scene)
-            }
+            val images = frame.getUpdatedTrackables(AugmentedImage::class.java)
 
-            // Create transformable (scalable) node from hit point
-            transformable = TransformableNode(ux.transformationSystem).apply {
-                renderable = shirt
 
-                scaleController.minScale = 0.05f
-                scaleController.maxScale = 0.85f
-                localScale = localScale.scaled(0.15f)
-                localRotation = Quaternion.axisAngle(Vector3(0f, 1f, 0f), 180f)
+            info ("Images detected: ${images.size}")
+            for (image in images) {
 
-                // The local scale of the TransformableNode
-                // must be set before calling node.setParent
-                setParent(node); select()
+                if (detected.containsKey(image).not() && image.trackingState == TrackingState.TRACKING) {
+
+                    val anchor = image.createAnchor(image.centerPose)
+                    val node = AnchorNode(anchor).apply {
+                        setParent(ux.arSceneView.scene)
+                    }
+
+                    detected[image] = TransformableNode(ux.transformationSystem).apply {
+                        renderable = shirt
+
+                        scaleController.minScale = 0.05f
+                        scaleController.maxScale = 0.85f
+
+                        localPosition = localPosition.apply { z = 0.2f; y = -0.1f }
+                        localScale = localScale.scaled(0.25f)
+
+                        localRotation = Quaternion.multiply(
+                            Quaternion.axisAngle(Vector3(1f, 0f, 0f), 270f),
+                            Quaternion.axisAngle(Vector3(0f, 1f, 0f), 180f)
+                        )
+
+                        // The local scale of the TransformableNode
+                        // must be set before calling node.setParent
+                        setParent(node); select()
+                    }
+
+                }
+
             }
         }
+
     }
 
     private fun getOpenGLVersion(): Double =
