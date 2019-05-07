@@ -10,10 +10,13 @@ import com.google.ar.core.ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE
 import com.google.ar.core.AugmentedImage
 import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
+import com.obsez.android.lib.filechooser.ChooserDialog
+import kotlinx.android.synthetic.main.activity_ar.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.info
@@ -34,25 +37,62 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
 
         // Render 3D model
         var shirt: ModelRenderable? = null
+        var default: ModelRenderable? = null
         ModelRenderable.builder()
             .setSource(this, Uri.parse("casual.sfb"))
             .build()
             .thenAccept {
-                shirt = it.apply {
-                    isShadowCaster = false
+                default = it.apply {
                     isShadowReceiver = false
+                    isShadowCaster = false
                 }
             }
+            .exceptionally { error(it) }
+
+        // Set up button
+        upload_button.setOnClickListener {
+            ChooserDialog(this)
+                .withFilter(false, false, "gltf")
+                .withChosenListener { _, file ->
+
+                    shirt = null; default = null
+                    ModelRenderable.builder()
+                        .setSource(this, RenderableSource.builder()
+                            .setSource(this, Uri.fromFile(file),
+                                RenderableSource.SourceType.GLTF2)
+                            .setRecenterMode(RenderableSource.RecenterMode.CENTER)
+
+                            .build())
+                        .setRegistryId(Uri.fromFile(file))
+                        .build()
+                        .thenAccept {
+                            shirt = it.apply {
+                                isShadowCaster = false
+                                isShadowReceiver = false
+                            }
+                        }
+                        .exceptionally { error(it) }
+                }
+                .build()
+                .show()
+        }
 
         // Get the instance of arFragment
         val ux = supportFragmentManager.
             findFragmentById(R.id.ux_fragment) as AugmentedImageFragment
 
         ux.arSceneView.scene.addOnUpdateListener {
+
+            info { "isShirtNull = ${shirt == null}" }
+            val model =
+                (if (shirt != null)
+                    shirt
+                else if (shirt == null && default != null)
+                    default
+                else null) ?: return@addOnUpdateListener
+
             val frame = ux.arSceneView.arFrame!!
-
             val images = frame.getUpdatedTrackables(AugmentedImage::class.java)
-
 
             info ("Images detected: ${images.size}")
             for (image in images) {
@@ -65,7 +105,7 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                     }
 
                     detected[image] = TransformableNode(ux.transformationSystem).apply {
-                        renderable = shirt
+                        renderable = model
 
                         scaleController.minScale = 0.05f
                         scaleController.maxScale = 0.85f
@@ -82,9 +122,7 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                         // must be set before calling node.setParent
                         setParent(node); select()
                     }
-
                 }
-
             }
         }
 
