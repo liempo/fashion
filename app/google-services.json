@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "902948588395",
+    "firebase_url": "https://ar-shop-186fd.firebaseio.com",
+    "project_id": "ar-shop-186fd",
+    "storage_bucket": "ar-shop-186fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902948588395:android:4a325c5bbbc98e54",
+        "android_client_info": {
+          "package_name": "com.fourcode.clients.fashion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902948588395-jb1hjfsr4gc3s9ijo49qlmj78guhum75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH9z_Kscue71t7LxDcHQWnOZIwrofgfec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902948588395-jb1hjfsr4gc3s9ijo49qlmj78guhum75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
