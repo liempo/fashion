@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_nav_bar_height"
+        tools:context=".HomeFragment"
+        tools:ignore="ContentDescription">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/banners_card_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/CardView.Light"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <com.glide.slider.library.SliderLayout
+                    android:id="@+id/banners_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+                android:id="@+id/categories_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_categories"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+
+                app:layout_constraintTop_toBottomOf="@+id/banners_card_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAlignment="center" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categories_recycler_view"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/categories_label"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+                android:id="@+id/featured_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_featured"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+
+                app:layout_constraintTop_toBottomOf="@+id/categories_recycler_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAlignment="center" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/featured_recycler_view"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/featured_label"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

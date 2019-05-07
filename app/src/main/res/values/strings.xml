@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Fashion</string>
+    <string name="app_name">Fashionista</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_ar">AR</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="format_price">PHP %.2f</string>
+    <string name="title_featured">Featured</string>
+    <string name="title_categories">Categories</string>
 </resources>

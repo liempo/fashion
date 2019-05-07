@@ -3,30 +3,35 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.fourcode.clients.fashion">
 
-    <!-- Indicates that app requires ARCore ("AR Required"). Ensures app is only
-         visible in the Google Play Store on devices that support ARCore. -->
     <uses-feature android:name="android.hardware.camera.ar"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
             android:allowBackup="false"
+            android:fullBackupContent="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
+            tools:ignore="GoogleAppIndexingWarning" >
 
-        <activity android:name=".ARActivity">
+        <activity
+                android:name=".MainActivity"
+                android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <activity android:name=".ARActivity"/>
+
         <meta-data
                 android:name="com.google.ar.core"
                 android:value="required"/>
+
     </application>
 
 </manifest>
