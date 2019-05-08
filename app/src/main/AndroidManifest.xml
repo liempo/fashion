@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ARActivity"/>
+        <activity android:name=".arcore.ARActivity"/>
 
         <meta-data
                 android:name="com.google.ar.core"

@@ -1,4 +1,4 @@
-package com.fourcode.clients.fashion
+package com.fourcode.clients.fashion.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,8 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fourcode.clients.fashion.product.ProductListFragment
+import com.fourcode.clients.fashion.R
 import kotlinx.android.synthetic.main.item_category.view.*
 
 class CategoryAdapter(private val activity: FragmentActivity, private val items: List<Category>):
@@ -30,7 +32,10 @@ class CategoryAdapter(private val activity: FragmentActivity, private val items:
         holder.name.text = item.name
         holder.card.setOnClickListener {
             activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.container, ProductListFragment.newInstance(item.name))
+                .replace(
+                    R.id.container,
+                    ProductListFragment.newInstance(item.name)
+                )
                 .addToBackStack("")
                 .commit()
         }

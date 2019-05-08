@@ -1,4 +1,4 @@
-package com.fourcode.clients.fashion
+package com.fourcode.clients.fashion.arcore
 
 import com.google.ar.core.AugmentedImageDatabase
 import com.google.ar.core.Config

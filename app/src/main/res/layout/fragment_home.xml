@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottom_nav_bar_height"
-        tools:context=".HomeFragment"
+        tools:context=".home.HomeFragment"
         tools:ignore="ContentDescription">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,6 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/categories_label"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+
         <TextView
                 android:id="@+id/featured_label"
                 android:layout_width="0dp"
@@ -93,6 +94,5 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.core.widget.NestedScrollView>

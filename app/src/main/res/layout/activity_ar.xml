@@ -2,9 +2,9 @@
                                                    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".ARActivity">
+             tools:context=".arcore.ARActivity">
 
-    <fragment android:name="com.fourcode.clients.fashion.AugmentedImageFragment"
+    <fragment android:name="com.fourcode.clients.fashion.arcore.AugmentedImageFragment"
               android:id="@+id/ux_fragment"
               android:layout_width="match_parent"
               android:layout_height="match_parent" />

@@ -1,17 +1,18 @@
-package com.fourcode.clients.fashion
+package com.fourcode.clients.fashion.product
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_category.view.image
-import kotlinx.android.synthetic.main.item_category.view.name
+import com.fourcode.clients.fashion.R
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class ProductListAdapter(private val items: List<Product>):
+class ProductListAdapter(private val activity: FragmentActivity, private val items: List<Product>):
     RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -31,24 +32,25 @@ class ProductListAdapter(private val items: List<Product>):
         holder.price.text = holder.price.context.
             getString(R.string.format_price, item.price)
 
+        holder.card.setOnClickListener {
+            activity.supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.container,
+                    ProductDetailsFragment.newInstance(item.name)
+                )
+                .addToBackStack("")
+                .commit()
+        }
+
     }
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
+        val card: CardView = view.card
         val image: ImageView = view.image
         val name: TextView = view.name
         val price: TextView = view.price
 
     }
-
-    data class Product(
-
-        val brand: String,
-        val description: String,
-        val category: String,
-        val image: String,
-        val name: String,
-        val price: Float
-    )
 
 }

@@ -1,10 +1,11 @@
-package com.fourcode.clients.fashion
+package com.fourcode.clients.fashion.arcore
 
 import android.app.ActivityManager
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.fourcode.clients.fashion.R
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE
 import com.google.ar.core.AugmentedImage

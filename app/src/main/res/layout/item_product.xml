@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:foreground="?android:attr/selectableItemBackground"
         style="@style/CardView.Light"
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="144dp"
         tools:layout_width="256dp"

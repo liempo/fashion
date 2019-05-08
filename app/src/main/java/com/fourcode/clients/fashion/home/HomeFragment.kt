@@ -1,4 +1,4 @@
-package com.fourcode.clients.fashion
+package com.fourcode.clients.fashion.home
 
 
 import android.os.Bundle
@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import com.bumptech.glide.request.RequestOptions
+import com.fourcode.clients.fashion.home.CategoryAdapter.Category
+import com.fourcode.clients.fashion.MainActivity
+import com.fourcode.clients.fashion.product.ProductListAdapter
+import com.fourcode.clients.fashion.R
+import com.fourcode.clients.fashion.product.Product
+import com.glide.slider.library.SliderTypes.DefaultSliderView
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.AnkoLogger
-
-import com.google.firebase.firestore.FirebaseFirestore
-
-import com.glide.slider.library.SliderTypes.DefaultSliderView
-import com.bumptech.glide.request.RequestOptions
-import com.fourcode.clients.fashion.CategoryAdapter.*
-import com.fourcode.clients.fashion.ProductListAdapter.*
 import org.jetbrains.anko.find
 
 class HomeFragment : Fragment(), AnkoLogger {
@@ -73,6 +73,7 @@ class HomeFragment : Fragment(), AnkoLogger {
                         setRequestOption(requestOptions)
                         setProgressBarVisible(true)
                     })
+
                 }
             }
 
@@ -100,12 +101,12 @@ class HomeFragment : Fragment(), AnkoLogger {
 
                 // Show categories to UI
                 categories.adapter = CategoryAdapter(activity!!,
-                    categoryItems.map { Category(it.key, it.value) }
-                )
+                    categoryItems.map { Category(it.key, it.value) })
+//                categories.hideShimmerAdapter()
 
                 // Sort products by price
                 featuredItems.sortWith(compareBy { it.price })
-                featured.adapter = ProductListAdapter(featuredItems)
+                featured.adapter = ProductListAdapter(activity!!, featuredItems)
 
             }
 

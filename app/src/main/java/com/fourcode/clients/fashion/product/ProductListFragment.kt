@@ -1,4 +1,4 @@
-package com.fourcode.clients.fashion
+package com.fourcode.clients.fashion.product
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fourcode.clients.fashion.ProductListAdapter.*
+import com.fourcode.clients.fashion.MainActivity
+import com.fourcode.clients.fashion.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.jetbrains.anko.AnkoLogger
@@ -79,7 +80,7 @@ class ProductListFragment: Fragment(), AnkoLogger {
                 progress_bar.visibility = View.INVISIBLE
 
                 // Show to UI
-                products.adapter = ProductListAdapter(featuredItems)
+                products.adapter = ProductListAdapter(activity!!, featuredItems)
 
             }
     }
