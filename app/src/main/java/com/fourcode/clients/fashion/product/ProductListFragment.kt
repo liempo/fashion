@@ -50,7 +50,7 @@ class ProductListFragment: Fragment(), AnkoLogger {
         activity?.title = category
 
         // Fetch categories from products
-        firestore.collection(COLLECTION_PRODUCTS).get()
+        firestore.collection(getString(R.string.collection_products)).get()
             .addOnSuccessListener { documents ->
                 val featuredItems = arrayListOf<Product>()
 
@@ -95,8 +95,6 @@ class ProductListFragment: Fragment(), AnkoLogger {
                     putString(ARG_CATEGORY, category)
                 }
             }
-
-        private const val COLLECTION_PRODUCTS = "products"
     }
 
 }

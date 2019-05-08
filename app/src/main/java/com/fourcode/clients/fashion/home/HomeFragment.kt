@@ -59,7 +59,7 @@ class HomeFragment : Fragment(), AnkoLogger {
         activity?.title = getString(R.string.title_home)
 
         // Get banners and add to UI
-        firestore.collection(COLLECTION_BANNERS).get()
+        firestore.collection(getString(R.string.collection_banners)).get()
             .addOnSuccessListener {
 
                 val requestOptions = RequestOptions().apply {
@@ -78,7 +78,7 @@ class HomeFragment : Fragment(), AnkoLogger {
             }
 
         // Fetch categories from products
-        firestore.collection(COLLECTION_PRODUCTS).get()
+        firestore.collection(getString(R.string.collection_products)).get()
             .addOnSuccessListener { documents ->
                 val categoryItems = hashMapOf<String, String>()
                 val featuredItems = arrayListOf<Product>()
@@ -114,8 +114,5 @@ class HomeFragment : Fragment(), AnkoLogger {
 
     companion object {
         @JvmStatic fun newInstance() = HomeFragment()
-
-        private const val COLLECTION_BANNERS = "banners"
-        private const val COLLECTION_PRODUCTS = "products"
     }
 }

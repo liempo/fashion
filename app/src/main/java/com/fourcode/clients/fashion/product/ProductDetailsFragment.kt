@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
+import com.google.firebase.firestore.FirebaseFirestore
 import org.jetbrains.anko.AnkoLogger
 
 class ProductDetailsFragment : Fragment(), AnkoLogger {
 
+    private lateinit var firestore: FirebaseFirestore
     private var productId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firestore = (activity as MainActivity).firestore
         arguments?.let { productId = it.getString(ARG_PRODUCT_ID) }
     }
 
@@ -27,6 +31,8 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
     }
 
 

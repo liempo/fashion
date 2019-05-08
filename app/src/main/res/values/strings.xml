@@ -10,4 +10,7 @@
     <string name="format_price">PHP %.2f</string>
     <string name="title_featured">Featured</string>
     <string name="title_categories">Categories</string>
+
+    <string name="collection_products">products</string>
+    <string name="collection_banners">banners</string>
 </resources>
