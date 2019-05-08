@@ -21,7 +21,7 @@
             app:contentScrim="?attr/colorPrimary">
 
         <ImageView
-                android:id="@+id/expandedImage"
+                android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
 
@@ -36,7 +36,135 @@
 
 </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Android Studio 3.4 doesnt fucking 
+    detect app_bar_scrolling_view_behavior 
+    
+    Can't wait to install 3.5 -->
+    <!--suppress AndroidDomInspection -->
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:padding="10dp"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:textSize="20sp"
+                    tools:textColor="@android:color/black"
+                    tools:textStyle="bold"
+                    tools:text="2014 Toyota Vitz"/>
+
+            <TextView
+                    android:id="@+id/description_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:textSize="17sp"
+                    tools:textColor="@color/colorPrimaryTextLight"
+                    tools:textStyle="bold"
+                    android:layout_below="@id/title"
+                    android:layout_marginTop="10dp"
+                    tools:text="Description"/>
+
+            <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/description_title"
+                    android:layout_marginTop="5dp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    tools:textSize="15sp"
+                    tools:text="Sample description of every piece of shit on this earth."/>
+
+            <TextView
+                    android:id="@+id/details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:textSize="17sp"
+                    tools:textColor="@color/colorPrimaryTextLight"
+                    tools:textStyle="bold"
+                    android:layout_below="@id/description"
+                    android:layout_marginTop="15dp"
+                    tools:text="Car details"/>
+
+            <TextView
+                    android:id="@+id/features_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:textSize="17sp"
+                    tools:textColor="@color/colorPrimaryTextLight"
+                    tools:textStyle="bold"
+                    android:layout_below="@id/details_title"
+                    android:layout_marginTop="15dp"
+                    tools:text="Features"/>
+
+            <TextView
+                    android:id="@+id/seller_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:textSize="17sp"
+                    tools:textColor="@color/colorPrimaryTextLight"
+                    tools:textStyle="bold"
+                    android:layout_below="@id/features_title"
+                    android:layout_marginTop="15dp"
+                    tools:text="Seller details"/>
+
+            <TextView
+                    android:id="@+id/sellerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/seller_title"
+                    tools:text="Samtonic Motors"/>
+
+            <TextView
+                    android:id="@+id/sellerPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/sellerName"
+                    tools:text="0726002063"/>
+
+            <TextView
+                    android:id="@+id/sellerLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/sellerPhone"
+                    tools:text="Gigiri, Nairobi, Kenya"/>
+
+            <TextView
+                    android:id="@+id/sellerEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/sellerLocation"
+                    tools:text="info@samtonic.co.ke"/>
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
