@@ -10,16 +10,19 @@ import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
 import com.google.firebase.firestore.FirebaseFirestore
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 class ProductDetailsFragment : Fragment(), AnkoLogger {
 
     private lateinit var firestore: FirebaseFirestore
-    private var productId: String? = null
+    private lateinit var documentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firestore = (activity as MainActivity).firestore
-        arguments?.let { productId = it.getString(ARG_PRODUCT_ID) }
+        arguments?.let {
+            documentId = it.getString(ARG_DOCUMENT_ID)!!
+        }
     }
 
     override fun onCreateView(
@@ -32,18 +35,25 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        firestore.collection(getString(R.string.collection_products))
+            .document(documentId).get()
+            .addOnSuccessListener {
+                // It fucking sucks that the DocumentSnapshot is made like this
+                // when DocumentQuerySnapshot return null. I wanna die.
+                // Need a null check before accessing data attribute. Fuck
 
+
+
+            }
     }
-
-
 
     companion object {
 
-        private const val ARG_PRODUCT_ID = "productId"
-        @JvmStatic fun newInstance(productId: String) =
+        private const val ARG_DOCUMENT_ID = "documentId"
+        @JvmStatic fun newInstance(id: String) =
             ProductDetailsFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PRODUCT_ID, productId)
+                    putString(ARG_DOCUMENT_ID, id)
                 }
             }
     }
