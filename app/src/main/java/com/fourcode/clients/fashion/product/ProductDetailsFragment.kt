@@ -6,7 +6,6 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fourcode.clients.fashion.MainActivity
@@ -41,6 +40,7 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         firestore.collection(getString(R.string.collection_products))
             .document(documentId).get()
             .addOnSuccessListener { product ->
@@ -55,8 +55,7 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
                 name.text = product.data?.get("name").toString()
                 brand.text = product.data?.get("brand").toString()
 
-                (activity as AppCompatActivity).
-                    supportActionBar?.title = "${brand.text} // ${name.text}"
+                activity?.title = "${brand.text} // ${name.text}"
 
                     description.text = Html.fromHtml(
                     product.data?.get("description").toString(),

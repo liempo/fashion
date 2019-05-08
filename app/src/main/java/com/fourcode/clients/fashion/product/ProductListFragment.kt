@@ -26,7 +26,6 @@ class ProductListFragment : Fragment(), AnkoLogger {
         super.onCreate(savedInstanceState)
         firestore = (activity as MainActivity).firestore
         category = arguments?.getString(ARG_CATEGORY) ?: ""
-        activity?.title = category
     }
 
     override fun onCreateView(
@@ -67,7 +66,6 @@ class ProductListFragment : Fragment(), AnkoLogger {
                     val stock = document.data["stock"].toString().toFloat()
                     val userId = document.data["userId"].toString()
                     val created = (document.data["createdOn"] as Timestamp)
-
 
                     info("$category, $categ")
                     if (category.isNotEmpty() && category != categ)

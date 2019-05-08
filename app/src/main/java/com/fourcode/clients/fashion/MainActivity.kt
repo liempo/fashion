@@ -58,8 +58,13 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onBackStackChanged() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(
-            supportFragmentManager.backStackEntryCount > 0)
+
+        title = if (supportFragmentManager.backStackEntryCount > 0) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportFragmentManager.getBackStackEntryAt(
+                supportFragmentManager.backStackEntryCount - 1).name
+        } else getString(R.string.title_home)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

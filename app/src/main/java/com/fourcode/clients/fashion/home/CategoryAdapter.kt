@@ -36,7 +36,7 @@ class CategoryAdapter(private val activity: FragmentActivity, private val items:
                     R.id.container,
                     ProductListFragment.newInstance(item.name)
                 )
-                .addToBackStack("")
+                .addToBackStack(item.name)
                 .commit()
         }
     }
