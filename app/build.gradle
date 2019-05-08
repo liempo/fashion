@@ -57,9 +57,14 @@ dependencies {
     // File chooser for picking files (gltf)
     implementation 'com.github.hedzr:android-file-chooser:master-SNAPSHOT'
 
+    // For loading animation
+    implementation 'com.facebook.shimmer:shimmer:0.4.0'
+
     // Sceneform and AR dependencies
-    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.9.0'
-    implementation 'com.google.ar.sceneform:assets:1.9.0'
+    //noinspection GradleDependency
+    implementation 'com.google.ar.sceneform:assets:1.8.0'
+    //noinspection GradleDependency
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.8.0'
 
     implementation 'com.google.firebase:firebase-firestore-ktx:19.0.0'
 }
