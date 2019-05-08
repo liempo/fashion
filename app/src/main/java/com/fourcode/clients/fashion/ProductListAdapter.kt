@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.item_category.view.image
 import kotlinx.android.synthetic.main.item_category.view.name
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class ProductAdapter(private val items: List<Product>):
-    RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductListAdapter(private val items: List<Product>):
+    RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(

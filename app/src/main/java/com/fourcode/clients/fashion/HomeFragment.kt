@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.glide.slider.library.SliderTypes.DefaultSliderView
 import com.bumptech.glide.request.RequestOptions
 import com.fourcode.clients.fashion.CategoryAdapter.*
-import com.fourcode.clients.fashion.ProductAdapter.*
+import com.fourcode.clients.fashion.ProductListAdapter.*
 import org.jetbrains.anko.find
 
 class HomeFragment : Fragment(), AnkoLogger {
@@ -105,7 +105,7 @@ class HomeFragment : Fragment(), AnkoLogger {
 
                 // Sort products by price
                 featuredItems.sortWith(compareBy { it.price })
-                featured.adapter = ProductAdapter(featuredItems)
+                featured.adapter = ProductListAdapter(featuredItems)
 
             }
 
