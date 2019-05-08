@@ -95,7 +95,7 @@ class HomeFragment : Fragment(), AnkoLogger {
                     if (category !in categoryItems)
                         categoryItems[category] = image
 
-                    featuredItems.add( Product(
+                    featuredItems.add( Product(document.id,
                         brand, description, category, image, name, price))
                 }
 

@@ -36,7 +36,7 @@ class ProductListAdapter(private val activity: FragmentActivity, private val ite
             activity.supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.container,
-                    ProductDetailsFragment.newInstance(item.name)
+                    ProductDetailsFragment.newInstance(item.documentId)
                 )
                 .addToBackStack("")
                 .commit()
