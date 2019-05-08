@@ -28,8 +28,8 @@
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"
-                tools:srcCompat="@tools:sample/backgrounds/scenic"
-                tools:ignore="ContentDescription"/>
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/jordan"/>
 
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -55,22 +55,50 @@
                 android:layout_height="match_parent">
 
             <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:textSize="20sp"
+                    android:textSize="20sp"
                     tools:textColor="@android:color/black"
-                    tools:textStyle="bold"
-                    tools:text="2014 Toyota Vitz"/>
+                    android:textStyle="bold"
+                    tools:text="Air Jordan 1 Retro"/>
 
             <TextView
-                    android:id="@+id/description_title"
+                    android:id="@+id/brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:textSize="17sp"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorSecondaryTextLight"
+                    tools:text="Nike"
+
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_toEndOf="@id/name"
+                    android:layout_alignBottom="@+id/name"
+                    android:layout_alignTop="@+id/name"/>
+
+            <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorSecondaryTextLight"
+                    tools:text="PHP 14, 500"
+
+                    android:layout_marginStart="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_toEndOf="@id/brand"
+                    android:layout_alignBottom="@+id/name"
+                    android:layout_alignTop="@+id/name"/>
+
+            <TextView
+                    android:id="@+id/description_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
                     tools:textColor="@color/colorPrimaryTextLight"
-                    tools:textStyle="bold"
-                    android:layout_below="@id/title"
+                    android:textStyle="bold"
+                    android:layout_below="@id/name"
                     android:layout_marginTop="10dp"
                     tools:text="Description"/>
 
@@ -78,88 +106,112 @@
                     android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/description_title"
+                    android:layout_below="@id/description_label"
                     android:layout_marginTop="5dp"
-                    tools:textColor="@color/colorSecondaryTextLight"
-                    tools:textSize="15sp"
+                    android:textColor="@color/colorSecondaryTextLight"
+                    android:textSize="15sp"
                     tools:text="Sample description of every piece of shit on this earth."/>
 
+
             <TextView
-                    android:id="@+id/details_title"
+                    android:id="@+id/product_details_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:textSize="17sp"
+                    android:textSize="17sp"
                     tools:textColor="@color/colorPrimaryTextLight"
-                    tools:textStyle="bold"
+                    android:textStyle="bold"
                     android:layout_below="@id/description"
                     android:layout_marginTop="15dp"
-                    tools:text="Car details"/>
+                    tools:text="Details"/>
 
             <TextView
-                    android:id="@+id/features_title"
+                    android:id="@+id/material"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:textSize="17sp"
-                    tools:textColor="@color/colorPrimaryTextLight"
-                    tools:textStyle="bold"
-                    android:layout_below="@id/details_title"
-                    android:layout_marginTop="15dp"
-                    tools:text="Features"/>
+                    android:layout_marginTop="5dp"
+                    android:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/product_details_title"
+                    tools:text="Samtonic Motors"/>
 
             <TextView
-                    android:id="@+id/seller_title"
+                    android:id="@+id/stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:textSize="17sp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/material"
+                    tools:text="0726002063"/>
+
+            <TextView
+                    android:id="@+id/created_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15sp"
+                    tools:textColor="@color/colorSecondaryTextLight"
+                    android:drawablePadding="10dp"
+                    android:layout_below="@id/stock"
+                    tools:text="Gigiri, Nairobi, Kenya"/>
+
+            <TextView
+                    android:id="@+id/seller_details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
                     tools:textColor="@color/colorPrimaryTextLight"
-                    tools:textStyle="bold"
-                    android:layout_below="@id/features_title"
+                    android:textStyle="bold"
+                    android:layout_below="@id/created_on"
                     android:layout_marginTop="15dp"
                     tools:text="Seller details"/>
 
             <TextView
-                    android:id="@+id/sellerName"
+                    android:id="@+id/shop_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    tools:textSize="15sp"
+                    android:textSize="15sp"
                     tools:textColor="@color/colorSecondaryTextLight"
                     android:drawablePadding="10dp"
-                    android:layout_below="@id/seller_title"
-                    tools:text="Samtonic Motors"/>
+                    android:layout_below="@id/seller_details_title"
+                    tools:text="Titan Gel"/>
 
             <TextView
-                    android:id="@+id/sellerPhone"
+                    android:id="@+id/shop_owner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    tools:textSize="15sp"
+                    android:textSize="15sp"
                     tools:textColor="@color/colorSecondaryTextLight"
                     android:drawablePadding="10dp"
-                    android:layout_below="@id/sellerName"
-                    tools:text="0726002063"/>
+                    android:layout_below="@id/shop_name"
+                    tools:text="Paolo Gonzales"/>
 
             <TextView
-                    android:id="@+id/sellerLocation"
+                    android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    tools:textSize="15sp"
+                    android:textSize="15sp"
                     tools:textColor="@color/colorSecondaryTextLight"
                     android:drawablePadding="10dp"
-                    android:layout_below="@id/sellerPhone"
-                    tools:text="Gigiri, Nairobi, Kenya"/>
+                    android:layout_below="@id/shop_owner"
+                    tools:text="+63 69 6969 420"/>
 
             <TextView
-                    android:id="@+id/sellerEmail"
+                    android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    tools:textSize="15sp"
+                    android:textSize="15sp"
                     tools:textColor="@color/colorSecondaryTextLight"
                     android:drawablePadding="10dp"
-                    android:layout_below="@id/sellerLocation"
-                    tools:text="info@samtonic.co.ke"/>
+                    android:layout_below="@id/phone"
+                    tools:text="Phase 4 Baba, Malapit Murato, Villa de Calamba "/>
+
 
 
         </RelativeLayout>
