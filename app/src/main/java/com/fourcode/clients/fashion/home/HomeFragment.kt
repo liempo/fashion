@@ -30,6 +30,7 @@ class HomeFragment : Fragment(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firestore = (activity as MainActivity).firestore
+        activity?.title = getString(R.string.title_home)
     }
 
     override fun onCreateView(
@@ -56,8 +57,6 @@ class HomeFragment : Fragment(), AnkoLogger {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.title = getString(R.string.title_home)
 
         // Get banners and add to UI
         firestore.collection(getString(R.string.collection_banners)).get()
@@ -91,16 +90,31 @@ class HomeFragment : Fragment(), AnkoLogger {
                     val description = document.data["description"].toString()
                     val price = document.data["price"].toString().toFloat()
                     val image = document.data["image"].toString()
-                    val category = document.data["category"].toString()
+                    val categ = document.data["category"].toString()
+                    val material = document.data["material"].toString()
+                    val stock = document.data["stock"].toString().toFloat()
+                    val userId = document.data["userId"].toString()
                     val created = (document.data["createdOn"] as Timestamp)
 
-                    if (category !in categoryItems)
-                        categoryItems[category] = image
+                    if (categ !in categoryItems)
+                        categoryItems[categ] = image
 
                     if (featuredItems.size <= FEATURED_ITEM_COUNT)
-                        featuredItems.add( Product(document.id,
-                            brand, description, category,
-                            image, name, price, created))
+                        featuredItems.add(
+                            Product(
+                                documentId = document.id,
+                                brand = brand,
+                                category = categ,
+                                dateCreated = created,
+                                description = description,
+                                image = image,
+                                material = material,
+                                name = name,
+                                price = price,
+                                stock = stock,
+                                userId = userId
+                            )
+                        )
                 }
 
                 // Show categories to UI
@@ -117,7 +131,9 @@ class HomeFragment : Fragment(), AnkoLogger {
     }
 
     companion object {
-        @JvmStatic fun newInstance() = HomeFragment()
+        @JvmStatic
+        fun newInstance() = HomeFragment()
+
         private const val FEATURED_ITEM_COUNT = 6
     }
 }

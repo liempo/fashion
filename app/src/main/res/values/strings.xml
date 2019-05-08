@@ -11,6 +11,15 @@
     <string name="title_featured">Featured</string>
     <string name="title_categories">Categories</string>
 
+    <string name="format_date">dd-MM-yyyy HH:mm:ss</string>
+    <string name="format_created_on">Created on: %s</string>
+    <string name="format_material">Material: %s</string>
+    <string name="format_stock">Stock: %s</string>
+
     <string name="collection_products">products</string>
     <string name="collection_banners">banners</string>
+    <string name="collection_profiles">profiles</string>
+    <string name="title_product_description">Description</string>
+    <string name="title_product_details">Details</string>
+    <string name="title_product_seller">Seller details</string>
 </resources>

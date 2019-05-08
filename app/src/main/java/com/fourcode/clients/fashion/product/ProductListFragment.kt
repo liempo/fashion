@@ -16,7 +16,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.find
 import org.jetbrains.anko.info
 
-class ProductListFragment: Fragment(), AnkoLogger {
+class ProductListFragment : Fragment(), AnkoLogger {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var products: RecyclerView
@@ -25,7 +25,8 @@ class ProductListFragment: Fragment(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firestore = (activity as MainActivity).firestore
-        category = arguments?.getString(ARG_CATEGORY)?: ""
+        category = arguments?.getString(ARG_CATEGORY) ?: ""
+        activity?.title = category
     }
 
     override fun onCreateView(
@@ -47,7 +48,6 @@ class ProductListFragment: Fragment(), AnkoLogger {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         activity?.title = category
 
         // Fetch categories from products
@@ -63,14 +63,31 @@ class ProductListFragment: Fragment(), AnkoLogger {
                     val price = document.data["price"].toString().toFloat()
                     val image = document.data["image"].toString()
                     val categ = document.data["category"].toString()
+                    val material = document.data["material"].toString()
+                    val stock = document.data["stock"].toString().toFloat()
+                    val userId = document.data["userId"].toString()
                     val created = (document.data["createdOn"] as Timestamp)
+
 
                     info("$category, $categ")
                     if (category.isNotEmpty() && category != categ)
                         continue
 
-                    featuredItems.add(Product(document.id, brand, description,
-                        category, image, name, price, created))
+                    featuredItems.add(
+                        Product(
+                            documentId = document.id,
+                            brand = brand,
+                            category = categ,
+                            dateCreated = created,
+                            description = description,
+                            image = image,
+                            material = material,
+                            name = name,
+                            price = price,
+                            stock = stock,
+                            userId = userId
+                        )
+                    )
 
                 }
 
