@@ -67,7 +67,7 @@ class ProductListFragment: Fragment(), AnkoLogger {
                     if (category.isNotEmpty() && category != categ)
                         continue
 
-                    featuredItems.add(Product(brand, description,
+                    featuredItems.add(Product(document.id, brand, description,
                         category, image, name, price))
 
 
