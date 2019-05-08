@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.8.0'
 
     implementation 'com.google.firebase:firebase-firestore-ktx:19.0.0'
+    implementation 'com.google.firebase:firebase-common-ktx:17.0.0'
 }
 
 

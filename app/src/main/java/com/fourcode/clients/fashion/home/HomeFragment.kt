@@ -9,12 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
-import com.fourcode.clients.fashion.home.CategoryAdapter.Category
 import com.fourcode.clients.fashion.MainActivity
-import com.fourcode.clients.fashion.product.ProductListAdapter
 import com.fourcode.clients.fashion.R
+import com.fourcode.clients.fashion.home.CategoryAdapter.Category
 import com.fourcode.clients.fashion.product.Product
+import com.fourcode.clients.fashion.product.ProductListAdapter
 import com.glide.slider.library.SliderTypes.DefaultSliderView
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.AnkoLogger
@@ -91,12 +92,15 @@ class HomeFragment : Fragment(), AnkoLogger {
                     val price = document.data["price"].toString().toFloat()
                     val image = document.data["image"].toString()
                     val category = document.data["category"].toString()
+                    val created = (document.data["createdOn"] as Timestamp)
 
                     if (category !in categoryItems)
                         categoryItems[category] = image
 
-                    featuredItems.add( Product(document.id,
-                        brand, description, category, image, name, price))
+                    if (featuredItems.size <= FEATURED_ITEM_COUNT)
+                        featuredItems.add( Product(document.id,
+                            brand, description, category,
+                            image, name, price, created))
                 }
 
                 // Show categories to UI
@@ -105,7 +109,8 @@ class HomeFragment : Fragment(), AnkoLogger {
 //                categories.hideShimmerAdapter()
 
                 // Sort products by price
-                featuredItems.sortWith(compareBy { it.price })
+                featuredItems.sortWith(compareBy { it.dateCreated })
+
                 featured.adapter = ProductListAdapter(activity!!, featuredItems)
 
             }
@@ -114,5 +119,6 @@ class HomeFragment : Fragment(), AnkoLogger {
 
     companion object {
         @JvmStatic fun newInstance() = HomeFragment()
+        private const val FEATURED_ITEM_COUNT = 6
     }
 }

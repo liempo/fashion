@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.jetbrains.anko.AnkoLogger
@@ -62,14 +63,14 @@ class ProductListFragment: Fragment(), AnkoLogger {
                     val price = document.data["price"].toString().toFloat()
                     val image = document.data["image"].toString()
                     val categ = document.data["category"].toString()
+                    val created = (document.data["createdOn"] as Timestamp)
 
                     info("$category, $categ")
                     if (category.isNotEmpty() && category != categ)
                         continue
 
                     featuredItems.add(Product(document.id, brand, description,
-                        category, image, name, price))
-
+                        category, image, name, price, created))
 
                 }
 
