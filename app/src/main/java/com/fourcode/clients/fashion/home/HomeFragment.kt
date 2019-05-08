@@ -106,7 +106,6 @@ class HomeFragment : Fragment(), AnkoLogger {
                 // Show categories to UI
                 categories.adapter = CategoryAdapter(activity!!,
                     categoryItems.map { Category(it.key, it.value) })
-//                categories.hideShimmerAdapter()
 
                 // Sort products by price
                 featuredItems.sortWith(compareBy { it.dateCreated })
