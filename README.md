@@ -6,6 +6,7 @@ An Android app based on Sceneform and ARCore.
  - [X] Home
  - [X] Product List (category content)
  - [X] Product Details
+ - [ ] Search
  - [ ] Authentication (Login and Signup)
  - [ ] Profile
  - [ ] Add to cart
