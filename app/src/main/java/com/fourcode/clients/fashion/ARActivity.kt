@@ -35,47 +35,52 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                 positiveButton("OK") { finish() }
             }.show()
 
+        upload_button.hide()
+
         // Render 3D model
         var shirt: ModelRenderable? = null
-        var default: ModelRenderable? = null
-        ModelRenderable.builder()
-            .setSource(this, Uri.parse("casual.sfb"))
-            .build()
-            .thenAccept {
-                default = it.apply {
-                    isShadowReceiver = false
-                    isShadowCaster = false
-                }
-            }
-            .exceptionally { error(it) }
 
-        // Set up button
-        upload_button.setOnClickListener {
-            ChooserDialog(this)
-                .withFilter(false, false, "gltf")
-                .withChosenListener { _, file ->
+        ChooserDialog(this)
+            .withFilter(false, false, "gltf")
+            .withChosenListener { _, file ->
 
-                    shirt = null; default = null
-                    ModelRenderable.builder()
-                        .setSource(this, RenderableSource.builder()
-                            .setSource(this, Uri.fromFile(file),
-                                RenderableSource.SourceType.GLTF2)
-                            .setRecenterMode(RenderableSource.RecenterMode.CENTER)
+                ModelRenderable.builder()
+                    .setSource(this, RenderableSource.builder()
+                        .setSource(this, Uri.fromFile(file),
+                            RenderableSource.SourceType.GLTF2)
+                        .setRecenterMode(RenderableSource.RecenterMode.CENTER)
 
-                            .build())
-                        .setRegistryId(Uri.fromFile(file))
-                        .build()
-                        .thenAccept {
-                            shirt = it.apply {
-                                isShadowCaster = false
-                                isShadowReceiver = false
-                            }
+                        .build())
+                    .setRegistryId(Uri.fromFile(file))
+                    .build()
+                    .thenAccept {
+                        shirt = it.apply {
+                            isShadowCaster = false
+                            isShadowReceiver = false
                         }
-                        .exceptionally { error(it) }
-                }
-                .build()
-                .show()
-        }
+
+                        upload_button.show()
+                    }
+                    .exceptionally { error(it) }
+            }
+            .withOnCancelListener {
+                ModelRenderable.builder()
+                    .setSource(this, Uri.parse("casual.sfb"))
+                    .build()
+                    .thenAccept {
+                        shirt = it.apply {
+                            isShadowReceiver = false
+                            isShadowCaster = false
+                        }
+
+                        upload_button.show()
+                    }
+                    .exceptionally { error(it) }
+            }
+            .build()
+            .show()
+
+        upload_button.setOnClickListener { recreate() }
 
         // Get the instance of arFragment
         val ux = supportFragmentManager.
@@ -83,13 +88,7 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
 
         ux.arSceneView.scene.addOnUpdateListener {
 
-            info { "isShirtNull = ${shirt == null}" }
-            val model =
-                (if (shirt != null)
-                    shirt
-                else if (shirt == null && default != null)
-                    default
-                else null) ?: return@addOnUpdateListener
+            if (shirt == null) return@addOnUpdateListener
 
             val frame = ux.arSceneView.arFrame!!
             val images = frame.getUpdatedTrackables(AugmentedImage::class.java)
@@ -105,7 +104,7 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
                     }
 
                     detected[image] = TransformableNode(ux.transformationSystem).apply {
-                        renderable = model
+                        renderable = shirt
 
                         scaleController.minScale = 0.05f
                         scaleController.maxScale = 0.85f
@@ -127,6 +126,8 @@ class ARActivity : AppCompatActivity(), AnkoLogger {
         }
 
     }
+
+
 
     private fun getOpenGLVersion(): Double =
         (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)

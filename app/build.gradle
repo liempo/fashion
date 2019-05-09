@@ -19,12 +19,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    aaptOptions {
-        noCompress "tflite"
-        noCompress "lite"
-    }
-
     // Sceneform libraries use language constructs from Java 8.
     // Add these compile options if targeting minSdkVersion < 26.
     compileOptions {
