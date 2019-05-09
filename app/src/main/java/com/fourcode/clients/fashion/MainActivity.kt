@@ -59,11 +59,13 @@ class MainActivity : AppCompatActivity(),
 
     override fun onBackStackChanged() {
 
-        title = if (supportFragmentManager.backStackEntryCount > 0) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportFragmentManager.getBackStackEntryAt(
-                supportFragmentManager.backStackEntryCount - 1).name
-        } else getString(R.string.title_home)
+        val isBackStackMany = supportFragmentManager.backStackEntryCount > 0
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(isBackStackMany)
+        title = if (isBackStackMany) supportFragmentManager
+            .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
+        else getString(R.string.title_home)
+
 
     }
 
