@@ -1,0 +1,310 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 6910,
+      "max": [
+        10.754199981689453,
+        55.588100433349609,
+        22.239500045776367
+      ],
+      "min": [
+        -22.349700927734375,
+        -5.7566499710083008,
+        -26.436500549316406
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 82920,
+      "componentType": 5126,
+      "count": 6910,
+      "max": [
+        0.99970424175262451,
+        0.99989932775497437,
+        0.99988067150115967
+      ],
+      "min": [
+        -0.9999881386756897,
+        -0.99317848682403564,
+        -0.99999618530273438
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 6910,
+      "max": [
+        0.99995273351669312,
+        0.99370276927947998,
+        0.99986404180526733,
+        1
+      ],
+      "min": [
+        -0.99986183643341064,
+        -0.99793058633804321,
+        -0.99978578090667725,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 6910,
+      "max": [
+        0.99780797958374023,
+        0.99780797958374023
+      ],
+      "min": [
+        0.0021919999271631241,
+        0.014406999573111534
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 55280,
+      "componentType": 5126,
+      "count": 6910,
+      "max": [
+        0.99780797958374023,
+        0.99780797958374023
+      ],
+      "min": [
+        0.0021919999271631241,
+        0.014406999573111534
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 38712,
+      "max": [
+        6909
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "nottyairs (https://sketchfab.com/nottyairs)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/t-shirt-1ed377fc5d754fe5bef6eb7053c0d5e2",
+      "title": "t-shirt"
+    },
+    "generator": "Sketchfab-4.61.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 154848,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 110560,
+      "byteOffset": 154848,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 165840,
+      "byteOffset": 265408,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 110560,
+      "byteOffset": 431248,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 541808,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "material_baseColor.jpeg"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.955012694
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Mat",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3,
+        5,
+        7
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        -4.3711390063094768e-08,
+        0.999999999999999,
+        0,
+        0,
+        -0.999999999999999,
+        -4.3711390063094768e-08,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "Collada visual scene group"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "T-Shirt"
+    },
+    {
+      "mesh": 0,
+      "name": "Mat"
+    },
+    {
+      "children": [
+        6
+      ],
+      "name": "Image_Based_Light_1"
+    },
+    {
+      "name": "Image_Based_Light_1"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        0.72478503025112606,
+        0.68851554425219474,
+        -0.025159595524943235,
+        0,
+        0,
+        0.036517424621190099,
+        0.99933301641596728,
+        0,
+        0.68897507931990887,
+        -0.72430161053399578,
+        0.026467282708762474,
+        0,
+        6.226222284970774,
+        124.21040260362179,
+        -184.89315824586888,
+        1
+      ],
+      "name": "Infinite_Light_1"
+    },
+    {
+      "name": "Infinite_Light_1"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ]
+}
+
