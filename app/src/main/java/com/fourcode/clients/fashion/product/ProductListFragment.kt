@@ -92,11 +92,14 @@ class ProductListFragment : Fragment(), AnkoLogger {
                 // Sort products by price
                 featuredItems.sortWith(compareBy { it.price })
 
-                // hide progress_bar
-                progress_bar.visibility = View.INVISIBLE
+                // Need to set as local variable for smart casting reasons
+                val activity = activity; if (activity != null) {
+                    // hide progress_bar
+                    progress_bar?.visibility = View.INVISIBLE
 
-                // Show to UI
-                products.adapter = ProductListAdapter(activity!!, featuredItems)
+                    // Show to UI
+                    products.adapter = ProductListAdapter(activity, featuredItems)
+                }
 
             }
     }

@@ -3,9 +3,7 @@ package com.fourcode.clients.fashion.product
 
 import android.os.Bundle
 import android.text.Html
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fourcode.clients.fashion.MainActivity
@@ -33,8 +31,10 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_product_details, container, false)
+    ): View? = inflater.inflate(
+        R.layout.fragment_product_details,
+        container, false).also {
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,31 +45,37 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
             .document(documentId).get()
             .addOnSuccessListener { product ->
 
-                Glide.with(view)
-                    .load(product.data?.get("image").toString())
-                    .into(image)
+                if (image != null)
+                    Glide.with(view)
+                        .load(product.data?.get("image").toString())
+                        .into(image)
 
                 // It fucking sucks that the DocumentSnapshot is made like this
                 // when DocumentQuerySnapshot return null. I wanna die.
                 // Need a null check before accessing data attribute. Fuck
-                name.text = product.data?.get("name").toString()
-                brand.text = product.data?.get("brand").toString()
+                name?.text = product.data?.get("name").toString()
+                brand?.text = product.data?.get("brand").toString()
 
-                activity?.title = "${brand.text} // ${name.text}"
+                activity?.title = ""
 
-                    description.text = Html.fromHtml(
+                description.text = Html.fromHtml(
                     product.data?.get("description").toString(),
-                    Html.FROM_HTML_MODE_COMPACT)
+                    Html.FROM_HTML_MODE_COMPACT
+                )
 
-                price.text = getString(R.string.format_price,
-                    product.data?.get("price").toString().toFloat())
+                price?.text = getString(
+                    R.string.format_price,
+                    product.data?.get("price").toString().toFloat()
+                )
 
-                stock.text = getString(R.string.format_stock, product.data?.get("stock"))
-                material.text = getString(R.string.format_material, product.data?.get("material"))
+                stock?.text = getString(R.string.format_stock, product.data?.get("stock"))
+                material?.text = getString(R.string.format_material, product.data?.get("material"))
 
-                created_on.text = getString(R.string.format_created_on,
+                created_on?.text = getString(
+                    R.string.format_created_on,
                     SimpleDateFormat(getString(R.string.format_date), Locale.getDefault())
-                    .format((product.data?.get("createdOn") as Timestamp).toDate()))
+                        .format((product.data?.get("createdOn") as Timestamp).toDate())
+                )
 
                 val userId = product.data?.get("userId").toString()
 
@@ -78,20 +84,26 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
                     .document(userId).get()
                     .addOnSuccessListener { profile ->
 
-                        // Fetch and bind data at the same time
-                        shop_name.text = profile.data?.get("shopName").toString()
-                        shop_owner.text = profile.data?.get("name").toString()
-                        phone.text = profile.data?.get("phone").toString()
-                        address.text = profile.data?.get("address").toString()
+                        // Fetch and bind data at the same time (added safe calls)
+                        shop_name?.text = profile.data?.get("shopName").toString()
+                        shop_owner?.text = profile.data?.get("name").toString()
+                        phone?.text = profile.data?.get("phone").toString()
+                        address?.text = profile.data?.get("address").toString()
 
                     }
             }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_product_detail, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     companion object {
 
         private const val ARG_DOCUMENT_ID = "documentId"
-        @JvmStatic fun newInstance(id: String) =
+        @JvmStatic
+        fun newInstance(id: String) =
             ProductDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_DOCUMENT_ID, id)
