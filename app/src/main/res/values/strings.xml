@@ -2,9 +2,7 @@
     <string name="app_name">Fashionista</string>
 
     <string name="title_home">Home</string>
-    <string name="title_search">Search</string>
     <string name="title_ar">AR</string>
-    <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
 
     <string name="format_price">PHP %.2f</string>
@@ -23,4 +21,8 @@
     <string name="title_product_details">Details</string>
     <string name="title_product_seller">Seller details</string>
     <string name="action_add_to_cart">Add to Cart</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="action_login">Login</string>
+    <string name="msg_signup">No account yet? Create one.</string>
 </resources>
