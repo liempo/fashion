@@ -85,10 +85,10 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
                     .addOnSuccessListener { profile ->
 
                         // Fetch and bind data at the same time (added safe calls)
-                        shop_name?.text = profile.data?.get("shopName").toString()
-                        shop_owner?.text = profile.data?.get("name").toString()
-                        phone?.text = profile.data?.get("phone").toString()
-                        address?.text = profile.data?.get("address").toString()
+                        shop_name.text = profile.data?.get("shopName").toString()
+                        shop_owner.text = profile.data?.get("name").toString()
+                        phone.text = profile.data?.get("phone").toString()
+                        address.text = profile.data?.get("address").toString()
 
                     }
             }

@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(),
             R.id.navigation_profile-> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, ProfileFragment.newInstance(uid))
+                    .commit()
                 return true
             }
         }
