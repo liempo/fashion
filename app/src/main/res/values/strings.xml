@@ -1,26 +1,27 @@
 <resources>
     <string name="app_name">Fashionista</string>
 
+    <!--Navigation -->
     <string name="title_home">Home</string>
     <string name="title_ar">AR</string>
     <string name="title_profile">Profile</string>
 
+    <!-- Home fragment -->
     <string name="format_price">PHP %.2f</string>
     <string name="title_featured">Featured</string>
     <string name="title_categories">Categories</string>
 
+    <!-- Product details fragment-->
     <string name="format_date">dd-MM-yyyy HH:mm:ss</string>
     <string name="format_created_on">Created on: %s</string>
     <string name="format_material">Material: %s</string>
     <string name="format_stock">Stock: %s</string>
-
-    <string name="collection_products">products</string>
-    <string name="collection_banners">banners</string>
-    <string name="collection_profiles">profiles</string>
     <string name="title_product_description">Description</string>
     <string name="title_product_details">Details</string>
     <string name="title_product_seller">Seller details</string>
     <string name="action_add_to_cart">Add to Cart</string>
+
+    <!--auth fragments -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="action_login">Login</string>
@@ -28,10 +29,20 @@
     <string name="error_email_invalid">Not a valid email address.</string>
     <string name="error_required">This field is required.</string>
     <string name="error_auth_failed">Authentication failed.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_register">Create Account</string>
     <string name="msg_login">Have an account? Log in here.</string>
     <string name="hint_confirm">Confirm password</string>
+
+
+    <!-- Firebase collections -->
+    <string name="collection_products">products</string>
+    <string name="collection_banners">banners</string>
+    <string name="collection_profiles">profiles</string>
+
+    <!-- Default profile strings -->
+    <string name="default_profile_name">Darh Vader</string>
+    <string name="default_profile_about">Don’t be too proud of this technological terror you’ve constructed. The ability to destroy a planet is insignificant next to the power of the Force… I find your lack of faith disturbing.</string>
+    <string name="default_profile_shop_name">The Empire</string>
+    <string name="default_profile_phone">+63 69 6969 420</string>
+    <string name="default_profile_address">Tatooine</string>
 </resources>
