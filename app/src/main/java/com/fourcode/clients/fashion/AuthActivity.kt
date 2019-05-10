@@ -36,6 +36,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val DEBUG = true
+        private const val DEBUG = false
     }
 }
