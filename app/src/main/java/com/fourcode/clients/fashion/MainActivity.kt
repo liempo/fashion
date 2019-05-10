@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity(),
                 startActivity<ARActivity>()
                 return true
             }
-//            R.id.navigation_notifications -> {
-//                return true
-//            }
-
             R.id.navigation_profile-> {
                 return true
             }
