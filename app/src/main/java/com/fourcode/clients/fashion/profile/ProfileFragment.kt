@@ -11,15 +11,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
-import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-class ProfileFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
+class ProfileFragment : Fragment() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var uid: String
-    private var range: Int = -1
 
     private lateinit var scaleDown: Animation
     private lateinit var scaleUp: Animation
@@ -52,7 +50,6 @@ class ProfileFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        app_bar_layout.addOnOffsetChangedListener(this)
 
         activity?.title = getString(R.string.title_profile)
 
@@ -86,32 +83,6 @@ class ProfileFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                 }
 
     }
-
-    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-        val show = false
-
-        when  {
-
-            // Initialize range
-            range == -1 -> {
-                range = app_bar_layout.totalScrollRange
-            }
-
-            // Animate circular view
-            range + verticalOffset == 0 -> {
-                profile_image.startAnimation(scaleDown)
-                profile_image.visibility = View.GONE
-            }
-
-            show -> {
-
-                profile_image.startAnimation(scaleUp)
-                profile_image.visibility = View.VISIBLE
-            }
-
-        }
-    }
-
 
     companion object {
 
