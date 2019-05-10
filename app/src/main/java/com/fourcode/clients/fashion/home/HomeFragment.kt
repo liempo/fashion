@@ -62,13 +62,16 @@ class HomeFragment : Fragment(), AnkoLogger {
         firestore.collection(getString(R.string.collection_banners)).get()
             .addOnSuccessListener {
 
+                // Make activity local for smart casting
+                val activity = activity ?: return@addOnSuccessListener
+
                 val requestOptions = RequestOptions().apply {
                     centerCrop()
                 }
 
                 for (document in it) {
 
-                    banners_layout.addSlider(DefaultSliderView(context).apply {
+                    banners_layout.addSlider(DefaultSliderView(activity).apply {
                         image(document.data["image"].toString())
                         setRequestOption(requestOptions)
                         setProgressBarVisible(true)
@@ -80,6 +83,10 @@ class HomeFragment : Fragment(), AnkoLogger {
         // Fetch categories from products
         firestore.collection(getString(R.string.collection_products)).get()
             .addOnSuccessListener { documents ->
+
+                // Make activity local for smart casting
+                val activity = activity ?: return@addOnSuccessListener
+
                 val categoryItems = hashMapOf<String, String>()
                 val featuredItems = arrayListOf<Product>()
 
@@ -118,13 +125,13 @@ class HomeFragment : Fragment(), AnkoLogger {
                 }
 
                 // Show categories to UI
-                categories.adapter = CategoryAdapter(activity!!,
+                categories.adapter = CategoryAdapter(activity,
                     categoryItems.map { Category(it.key, it.value) })
 
                 // Sort products by price
                 featuredItems.sortWith(compareBy { it.dateCreated })
 
-                featured.adapter = ProductListAdapter(activity!!, featuredItems)
+                featured.adapter = ProductListAdapter(activity, featuredItems)
 
             }
 

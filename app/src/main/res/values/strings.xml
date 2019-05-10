@@ -45,4 +45,8 @@
     <string name="default_profile_shop_name">The Empire</string>
     <string name="default_profile_phone">+63 69 6969 420</string>
     <string name="default_profile_address">Tatooine</string>
+
+    <!-- Profile strings -->
+    <string name="title_product_list">Products</string>
+
 </resources>

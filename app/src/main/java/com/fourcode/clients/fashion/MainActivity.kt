@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity(),
     OnBackStackChangedListener, AnkoLogger {
 
     internal lateinit var firestore: FirebaseFirestore
-    private lateinit var uid: String
+    internal lateinit var uid: String
+    private var itemSelected = R.id.navigation_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,23 +44,35 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        var isSuccess = false
+
         when (item.itemId) {
+
             R.id.navigation_home -> {
-                return true
+                isSuccess = true
+                if (itemSelected != R.id.navigation_home)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, HomeFragment.newInstance())
+                        .commit()
             }
+
             R.id.navigation_ar -> {
+                isSuccess = true
                 startActivity<ARActivity>()
-                return true
             }
+
             R.id.navigation_profile-> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, ProfileFragment.newInstance(uid))
-                    .commit()
-                return true
+                isSuccess = true
+                if (itemSelected != R.id.navigation_profile)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, ProfileFragment.newInstance(uid))
+                        .commit()
             }
         }
 
-        return false
+        itemSelected = item.itemId
+
+        return isSuccess
     }
 
     override fun onBackStackChanged() {
