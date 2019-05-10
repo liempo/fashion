@@ -31,4 +31,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_register">Create Account</string>
+    <string name="msg_login">Have an account? Log in here.</string>
+    <string name="hint_confirm">Confirm password</string>
 </resources>

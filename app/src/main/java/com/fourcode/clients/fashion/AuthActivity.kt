@@ -25,8 +25,13 @@ class AuthActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if (auth.currentUser != null && DEBUG.not()) {
-            finish(); startActivity<MainActivity>()
+        // Initialize for smart casting purposes
+        val currentUser = auth.currentUser
+
+        if (currentUser != null && DEBUG.not()) {
+            finish(); startActivity<MainActivity>(
+                MainActivity.ARG_UID to currentUser.uid
+            )
         }
     }
 
