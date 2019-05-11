@@ -48,5 +48,7 @@
 
     <!-- Profile strings -->
     <string name="title_product_list">Products</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_edit">Edit</string>
 
 </resources>

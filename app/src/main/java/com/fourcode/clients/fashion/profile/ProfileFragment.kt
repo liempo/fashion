@@ -1,21 +1,22 @@
 package com.fourcode.clients.fashion.profile
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fourcode.clients.fashion.AuthActivity
 import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
 import com.fourcode.clients.fashion.product.Product
 import com.fourcode.clients.fashion.product.ProductListAdapter
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 
 class ProfileFragment : Fragment() {
 
@@ -44,7 +45,7 @@ class ProfileFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 3)
         }
 
-        return view
+        return view.also { setHasOptionsMenu(true) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -130,7 +131,26 @@ class ProfileFragment : Fragment() {
                 progress_bar.visibility = View.INVISIBLE
 
             }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_profile, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when(item?.itemId) {
+        R.id.logout_button -> {
+            FirebaseAuth.getInstance().signOut()
+            activity?.finish()
+            activity?.startActivity<AuthActivity>()
+            true
+        }
+
+        R.id.edit_button -> {
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
