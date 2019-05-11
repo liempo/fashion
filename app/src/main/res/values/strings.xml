@@ -53,5 +53,7 @@
     <string name="hint_shop">Shop</string>
     <string name="hint_phone">Phone</string>
     <string name="hint_address">Address</string>
+    <string name="action_upload">Upload</string>
+    <string name="hint_profile_about">About</string>
 
 </resources>

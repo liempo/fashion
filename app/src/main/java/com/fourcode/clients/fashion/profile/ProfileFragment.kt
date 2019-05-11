@@ -1,8 +1,13 @@
 package com.fourcode.clients.fashion.profile
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.Intent.ACTION_PICK
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.view.*
-import android.widget.TextView.BufferType.*
+import android.widget.TextView.BufferType.EDITABLE
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,15 +20,20 @@ import com.fourcode.clients.fashion.product.ProductListAdapter
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_profile.*
-import org.jetbrains.anko.find
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), AnkoLogger {
 
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var storage: StorageReference
+
     private lateinit var products: RecyclerView
+    private var imageToUpload: Uri? = null
     private lateinit var uid: String
+
     private var edit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +44,8 @@ class ProfileFragment : Fragment() {
         }
 
         firestore = (activity as MainActivity).firestore
+        storage = (activity as MainActivity).storage
+
     }
 
     override fun onCreateView(
@@ -67,8 +79,19 @@ class ProfileFragment : Fragment() {
             // Hide some UIs
             products.visibility = View.INVISIBLE
             product_list_label?.visibility = View.INVISIBLE
-            progress_bar?.visibility = View.INVISIBLE
+            product_list_progress_bar.visibility = View.INVISIBLE
 
+            // Show upload image button
+            upload_button?.apply {
+
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    startActivityForResult(
+                        Intent(ACTION_PICK).apply { type = "image/*" }, REQUEST_IMAGE)
+                }
+            }
+
+            // Enable inputs
             name?.isEnabled = true
             about?.isEnabled = true
             shop_name?.isEnabled = true
@@ -83,35 +106,9 @@ class ProfileFragment : Fragment() {
             phone?.setBackgroundResource(android.R.color.transparent)
             address?.setBackgroundResource(android.R.color.transparent)
 
-        }
+            // Leave inputs disabled
 
-        firestore.collection(getString(R.string.collection_profiles))
-            .document(uid).get()
-            .addOnSuccessListener {
-                // Aah shit, here we go again
-                // Looks weird, but this is a null check hahaha
-                if (it.data?.containsKey("image") == true)
-                    Glide.with(view)
-                        .load(it.data?.get("image").toString())
-                        .into(profile_image)
-
-                if (it.data?.containsKey("name") == true)
-                    name?.setText(it.data?.get("name").toString(), EDITABLE)
-
-                if (it.data?.containsKey("about") == true)
-                    about?.setText(it.data?.get("about").toString(), EDITABLE)
-
-                if (it.data?.containsKey("shopName") == true)
-                    shop_name?.setText(it.data?.get("shopName").toString(), EDITABLE)
-
-                if (it.data?.containsKey("phone") == true)
-                    phone?.setText(it.data?.get("phone").toString(), EDITABLE)
-
-                if (it.data?.containsKey("address") == true)
-                    address?.setText(it.data?.get("address").toString(), EDITABLE)
-            }
-
-        if (edit.not()) {
+            // Fetch user products
             firestore.collection(getString(R.string.collection_products)).get()
                 .addOnSuccessListener { documents ->
 
@@ -159,8 +156,55 @@ class ProfileFragment : Fragment() {
                     products.adapter = ProductListAdapter(activity, items)
                 }
 
-            progress_bar.visibility = View.INVISIBLE
+            product_list_progress_bar.visibility = View.INVISIBLE
         }
+
+        firestore.collection(getString(R.string.collection_profiles))
+            .document(uid).get()
+            .addOnSuccessListener {
+                // Aah shit, here we go again
+                // Looks weird, but this is a null check hahaha
+                if (it.data?.containsKey("image") == true)
+                    Glide.with(view)
+                        .load(it.data?.get("image").toString())
+                        .into(profile_image)
+
+                if (it.data?.containsKey("name") == true)
+                    name?.setText(it.data?.get("name").toString(), EDITABLE)
+
+                if (it.data?.containsKey("about") == true)
+                    about?.setText(it.data?.get("about").toString(), EDITABLE)
+
+                if (it.data?.containsKey("shopName") == true)
+                    shop_name?.setText(it.data?.get("shopName").toString(), EDITABLE)
+
+                if (it.data?.containsKey("phone") == true)
+                    phone?.setText(it.data?.get("phone").toString(), EDITABLE)
+
+                if (it.data?.containsKey("address") == true)
+                    address?.setText(it.data?.get("address").toString(), EDITABLE)
+
+                profile_progress_bar.visibility = View.INVISIBLE
+            }
+    }
+
+    /* https://stackoverflow.com/questions/16928727/open-gallery-app-from-android-intent */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_IMAGE &&
+            resultCode == RESULT_OK &&
+            data != null && data.data != null) {
+
+            // Smart casting issues but won't crash anyway
+            imageToUpload = data.data!!
+
+            // Preview to bitmap
+            profile_image.setImageBitmap(
+                getBitmap(context?.contentResolver, imageToUpload))
+
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -189,10 +233,88 @@ class ProfileFragment : Fragment() {
 
         R.id.edit_button -> {
 
-            val transaction = activity?.supportFragmentManager?.beginTransaction()?.
-                replace(R.id.container, newInstance(uid, edit.not()))
-            if (edit) transaction?.addToBackStack("Edit Profile")
-            transaction?.commit()
+            // Edit button will act as save button if edit mode is true
+            if (edit) {
+
+                // Update UI first
+                name?.isEnabled = true
+                about?.isEnabled = true
+                shop_name?.isEnabled = true
+                phone?.isEnabled = true
+                address?.isEnabled = true
+                profile_progress_bar.visibility = View.VISIBLE
+
+
+                val profile = hashMapOf<String, Any>(
+                    "name" to name.text.toString(),
+                    "address" to address.text.toString(),
+                    "phone" to phone.text.toString(),
+                    "shopName" to shop_name.text.toString(),
+                    "about" to about.text.toString()
+                )
+
+                // Image upload section section
+                if (imageToUpload != null) {
+
+                    // Convert to stream
+                    // Tangina galit na galit hahaha
+                    val stream = context!!.
+                        contentResolver!!.
+                        openInputStream(imageToUpload!!)!!
+
+                    storage.child("profiles/$uid")
+                        .putStream(stream)
+                        .addOnSuccessListener { upload ->
+
+                            upload.storage.downloadUrl.addOnSuccessListener {
+
+                                info(it)
+                                profile["image"] = it.toString()
+
+                                firestore.collection(getString(R.string.collection_profiles))
+                                    .document(uid).set(profile, SetOptions.merge())
+                                    .addOnSuccessListener {
+                                        context?.toast("Successfully " +
+                                                "updated your profile.")?.show()
+                                        profile_progress_bar.visibility = View.INVISIBLE
+                                        activity?.supportFragmentManager?.popBackStack()
+                                    }
+                                    .addOnFailureListener {
+                                        context?.toast("Failed " +
+                                                "updating your profile.")?.show()
+                                        profile_progress_bar.visibility = View.INVISIBLE
+                                        activity?.supportFragmentManager?.popBackStack()
+                                    }
+                            }
+                        }
+                        .addOnFailureListener {
+                            profile_progress_bar.visibility = View.INVISIBLE
+                            activity?.toast("Failed uploading image.")?.show()
+                        }
+
+                } else {
+                    firestore.collection(getString(R.string.collection_profiles))
+                        .document(uid).set(profile, SetOptions.merge())
+                        .addOnSuccessListener {
+                            context?.toast("Successfully " +
+                                    "updated your profile.")?.show()
+                            profile_progress_bar.visibility = View.INVISIBLE
+                            activity?.supportFragmentManager?.popBackStack()
+                        }
+                        .addOnFailureListener {
+                            context?.toast("Failed " +
+                                    "updating your profile.")?.show()
+                            profile_progress_bar.visibility = View.INVISIBLE
+                            activity?.supportFragmentManager?.popBackStack()
+                        }
+                }
+            } else {
+
+                activity?.supportFragmentManager?.beginTransaction()?.
+                    replace(R.id.container, newInstance(uid, true))?.
+                    addToBackStack("Edit Profile")?.
+                    commit()
+            }
 
             true
         }
@@ -204,6 +326,7 @@ class ProfileFragment : Fragment() {
 
         internal const val ARG_UID = "uid"
         internal const val ARG_EDIT = "edit"
+        private const val REQUEST_IMAGE = 1242
 
         @JvmStatic
         fun newInstance(uid: String, edit: Boolean = false) =

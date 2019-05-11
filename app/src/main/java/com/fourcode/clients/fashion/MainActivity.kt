@@ -9,6 +9,8 @@ import com.fourcode.clients.fashion.home.HomeFragment
 import com.fourcode.clients.fashion.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -19,7 +21,9 @@ class MainActivity : AppCompatActivity(),
     OnBackStackChangedListener, AnkoLogger {
 
     internal lateinit var firestore: FirebaseFirestore
+    internal lateinit var storage: StorageReference
     internal lateinit var uid: String
+
     private var itemSelected = R.id.navigation_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +32,8 @@ class MainActivity : AppCompatActivity(),
 
         // Initialize firestore
         firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance().reference
+
         uid = intent.getStringExtra(ARG_UID)
         info("uid = $uid")
 

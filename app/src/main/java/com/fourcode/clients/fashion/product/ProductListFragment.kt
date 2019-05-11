@@ -95,7 +95,7 @@ class ProductListFragment : Fragment(), AnkoLogger {
                 // Need to set as local variable for smart casting reasons
                 val activity = activity; if (activity != null) {
                     // hide progress_bar
-                    progress_bar?.visibility = View.INVISIBLE
+                    product_list_progress_bar?.visibility = View.INVISIBLE
 
                     // Show to UI
                     products.adapter = ProductListAdapter(activity, featuredItems)
