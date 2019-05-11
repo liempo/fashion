@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fashionista</string>
+    <string name="app_name">Fashionistapp</string>
 
     <!--Navigation -->
     <string name="title_home">Home</string>
@@ -50,5 +50,8 @@
     <string name="title_product_list">Products</string>
     <string name="action_logout">Logout</string>
     <string name="action_edit">Edit</string>
+    <string name="hint_shop">Shop</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_address">Address</string>
 
 </resources>
