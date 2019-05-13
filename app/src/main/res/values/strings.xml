@@ -55,5 +55,6 @@
     <string name="hint_address">Address</string>
     <string name="action_upload">Upload</string>
     <string name="hint_profile_about">About</string>
+    <string name="action_view_cart">View Cart</string>
 
 </resources>
