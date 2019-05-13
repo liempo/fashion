@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:19.0.0'
     implementation 'com.google.firebase:firebase-storage:17.0.0'
 
+    // For profile image
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
 }
 
