@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(),
 
     internal lateinit var firestore: FirebaseFirestore
     internal lateinit var storage: StorageReference
+    internal val cart = hashMapOf<String, Int>()
     internal lateinit var uid: String
 
     private var itemSelected = R.id.navigation_home

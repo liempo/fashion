@@ -12,6 +12,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.alert
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,7 +40,6 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         firestore.collection(getString(R.string.collection_products))
             .document(documentId).get()
@@ -97,6 +97,38 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_product_detail, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+
+            R.id.add_to_cart_button -> {
+
+                val cart = (activity as MainActivity).cart
+
+                if (documentId !in cart)
+                    cart[documentId] = 0
+                // Will not crash for sure (??)
+                cart[documentId]!!.plus(1)
+
+                context?.alert(
+                    getString(R.string.msg_continue_or_add)
+                ) {
+
+                    positiveButton(getString(R.string.action_continue_shopping)) {}
+
+                    negativeButton(getString(R.string.action_checkout)) {
+
+                    }
+
+                }?.show()
+
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

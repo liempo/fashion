@@ -20,6 +20,12 @@
     <string name="title_product_details">Details</string>
     <string name="title_product_seller">Seller details</string>
     <string name="action_add_to_cart">Add to Cart</string>
+    <string name="action_continue_shopping">Continue</string>
+    <string name="action_checkout">Checkout</string>
+    <string name="msg_continue_or_add">Continue shopping or add more products?</string>
+
+    <!-- Cart fragment-->
+    <string name="title_cart">Cart</string>
 
     <!--auth fragments -->
     <string name="hint_email">Email</string>
