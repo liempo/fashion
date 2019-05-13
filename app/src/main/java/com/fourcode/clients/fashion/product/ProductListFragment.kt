@@ -37,7 +37,7 @@ class ProductListFragment : Fragment(), AnkoLogger {
             container, false
         )
 
-        products = view.find(R.id.products_recycler_view)
+        products = view.find(R.id.cart_recycler_view)
         with(products) {
             layoutManager = GridLayoutManager(context, 2)
         }
@@ -95,7 +95,7 @@ class ProductListFragment : Fragment(), AnkoLogger {
                 // Need to set as local variable for smart casting reasons
                 val activity = activity; if (activity != null) {
                     // hide progress_bar
-                    product_list_progress_bar?.visibility = View.INVISIBLE
+                    cart_progress_bar?.visibility = View.INVISIBLE
 
                     // Show to UI
                     products.adapter = ProductListAdapter(activity, featuredItems)

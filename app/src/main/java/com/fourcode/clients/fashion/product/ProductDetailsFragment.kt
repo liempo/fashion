@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
+import com.fourcode.clients.fashion.cart.CartFragment
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_product_details.*
@@ -110,7 +111,7 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
                 if (documentId !in cart)
                     cart[documentId] = 0
                 // Will not crash for sure (??)
-                cart[documentId]!!.plus(1)
+                cart[documentId] = cart[documentId]!!.plus(1)
 
                 context?.alert(
                     getString(R.string.msg_continue_or_add)
@@ -119,6 +120,10 @@ class ProductDetailsFragment : Fragment(), AnkoLogger {
                     positiveButton(getString(R.string.action_continue_shopping)) {}
 
                     negativeButton(getString(R.string.action_checkout)) {
+                        activity?.supportFragmentManager?.beginTransaction()?.
+                            replace(R.id.container, CartFragment.newInstance())?.
+                            addToBackStack("Cart")?.
+                            commit()
 
                     }
 

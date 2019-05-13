@@ -13,7 +13,7 @@ import com.fourcode.clients.fashion.product.Product
 import com.fourcode.clients.fashion.product.ProductListAdapter
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_product_list.*
+import kotlinx.android.synthetic.main.fragment_cart.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.find
 
@@ -26,6 +26,7 @@ class CartFragment : Fragment(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firestore = (activity as MainActivity).firestore
+        cart = (activity as MainActivity).cart
     }
 
     override fun onCreateView(
@@ -33,11 +34,11 @@ class CartFragment : Fragment(), AnkoLogger {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.fragment_product_list,
+            R.layout.fragment_cart,
             container, false
         )
 
-        products = view.find(R.id.products_recycler_view)
+        products = view.find(R.id.cart_recycler_view)
         with(products) {
             layoutManager = GridLayoutManager(context, 2)
         }
@@ -80,7 +81,7 @@ class CartFragment : Fragment(), AnkoLogger {
                             image = image,
                             material = material,
                             name = "$name x${cart[document.id]}",
-                            price = price,
+                            price = price * cart[document.id]!!,
                             stock = stock,
                             userId = userId
                         )
@@ -88,14 +89,26 @@ class CartFragment : Fragment(), AnkoLogger {
 
                 }
 
+                var total = 0f
+                val breakdown = featuredItems.joinToString("\n") {
+                    val quantity = cart[it.documentId]!!
+                    val subtotal = it.price * quantity.toFloat()
+                    total += subtotal
+
+                    "${it.name}  x$quantity  - ${getString(
+                        R.string.format_price, subtotal)}"
+                }
+
                 // Need to set as local variable for smart casting reasons
                 val activity = activity; if (activity != null) {
-                // hide progress_bar
-                product_list_progress_bar?.visibility = View.INVISIBLE
+                    // hide progress_bar
+                    cart_progress_bar?.visibility = View.INVISIBLE
+                    subtotal_price?.text = breakdown
+                    total_price?.text = getString(R.string.format_price, total)
 
-                // Show to UI
-                products.adapter = ProductListAdapter(activity, featuredItems)
-            }
+                    // Show to UI
+                    products.adapter = ProductListAdapter(activity, featuredItems)
+                }
 
             }
     }

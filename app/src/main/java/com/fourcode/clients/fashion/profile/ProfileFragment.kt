@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.fourcode.clients.fashion.AuthActivity
 import com.fourcode.clients.fashion.MainActivity
 import com.fourcode.clients.fashion.R
+import com.fourcode.clients.fashion.cart.CartFragment
 import com.fourcode.clients.fashion.product.Product
 import com.fourcode.clients.fashion.product.ProductListAdapter
 import com.google.firebase.Timestamp
@@ -58,7 +59,7 @@ class ProfileFragment : Fragment(), AnkoLogger {
             container, false
         )
 
-        products = view.find(R.id.products_recycler_view)
+        products = view.find(R.id.cart_recycler_view)
 
         with(products) {
             layoutManager = GridLayoutManager(context, 3)
@@ -79,7 +80,7 @@ class ProfileFragment : Fragment(), AnkoLogger {
             // Hide some UIs
             products.visibility = View.INVISIBLE
             product_list_label?.visibility = View.INVISIBLE
-            product_list_progress_bar.visibility = View.INVISIBLE
+            cart_progress_bar.visibility = View.INVISIBLE
 
             // Show upload image button
             upload_button?.apply {
@@ -156,7 +157,7 @@ class ProfileFragment : Fragment(), AnkoLogger {
                     products.adapter = ProductListAdapter(activity, items)
                 }
 
-            product_list_progress_bar.visibility = View.INVISIBLE
+            cart_progress_bar.visibility = View.INVISIBLE
         }
 
         firestore.collection(getString(R.string.collection_profiles))
@@ -228,6 +229,15 @@ class ProfileFragment : Fragment(), AnkoLogger {
             FirebaseAuth.getInstance().signOut()
             activity?.finish()
             activity?.startActivity<AuthActivity>()
+            true
+        }
+
+        R.id.view_cart_button -> {
+
+            activity?.supportFragmentManager?.beginTransaction()?.
+                replace(R.id.container, CartFragment.newInstance())?.
+                addToBackStack("Cart")?.
+                commit()
             true
         }
 
