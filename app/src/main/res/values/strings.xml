@@ -62,4 +62,5 @@
     <string name="action_upload">Upload</string>
     <string name="hint_profile_about">About</string>
     <string name="action_view_cart">View Cart</string>
+    <string name="action_clear_all">Clear All</string>
 </resources>

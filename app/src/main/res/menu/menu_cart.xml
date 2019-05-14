@@ -4,6 +4,12 @@
 
     <item
             android:id="@+id/clear_button"
+            android:icon="@drawable/ic_clear_all_black_24dp"
+            android:title="@string/action_clear_all"
+            app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/checkout_button"
             android:icon="@drawable/ic_payment_black_24dp"
             android:title="@string/action_checkout"
             app:showAsAction="always"/>

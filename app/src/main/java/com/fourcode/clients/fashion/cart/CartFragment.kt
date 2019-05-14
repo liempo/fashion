@@ -1,9 +1,7 @@
 package com.fourcode.clients.fashion.cart
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +36,7 @@ class CartFragment : Fragment(), AnkoLogger {
             container, false
         )
 
+        setHasOptionsMenu(true)
         products = view.find(R.id.cart_recycler_view)
         with(products) {
             layoutManager = GridLayoutManager(context, 2)
@@ -111,6 +110,24 @@ class CartFragment : Fragment(), AnkoLogger {
                 }
 
             }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_cart, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+
+        R.id.clear_button -> {
+
+            (activity as MainActivity).cart.clear()
+            activity?.supportFragmentManager?.popBackStack()
+
+            true
+        }
+
+        else -> false
     }
 
     companion object {
