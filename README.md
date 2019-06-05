@@ -10,4 +10,4 @@ An Android app based on Sceneform and ARCore.
  - [x] Authentication (Login and Signup)
  - [x] Profile
  - [x] Add to cart
- - [ ] Order (Transaction)
+ - [x] Order (Transaction)
